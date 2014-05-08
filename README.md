@@ -14,6 +14,9 @@ object found in the first element of the array.
 Every value to be output to the table is processed through `tableify` recursively so objects containing
 other objects will result in tables within tables.
 
+For each `td` cell that is created, a class is generated based on the `constructor.name` of the value, or
+`null` if the value is null.
+
 install
 -------
 
