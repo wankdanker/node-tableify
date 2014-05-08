@@ -1,10 +1,10 @@
 {
-  "name": "node-htmltableify",
+  "name": "tableify",
   "version": "0.0.0",
-  "description": "Render Javascript Objects to HTML tables",
+  "description": "Create HTML tables from Javascript Objects",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test.js"
   },
   "author": "Dan VerWeire",
   "license": "MIT"
