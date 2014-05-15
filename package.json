@@ -6,6 +6,9 @@
   "scripts": {
     "test": "node test.js"
   },
+  "bin" : {
+    "tableify" : "./bin/tableify.js"
+  },
   "author": "Dan VerWeire",
   "license": "MIT"
 }
