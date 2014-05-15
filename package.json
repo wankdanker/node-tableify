@@ -1,13 +1,13 @@
 {
   "name": "tableify",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Create HTML tables from Javascript Objects",
   "main": "index.js",
   "scripts": {
     "test": "node test.js"
   },
-  "bin" : {
-    "tableify" : "./bin/tableify.js"
+  "bin": {
+    "tableify": "./bin/tableify.js"
   },
   "author": "Dan VerWeire",
   "license": "MIT"
