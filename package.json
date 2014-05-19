@@ -1,6 +1,6 @@
 {
   "name": "tableify",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Create HTML tables from Javascript Objects",
   "main": "index.js",
   "scripts": {
