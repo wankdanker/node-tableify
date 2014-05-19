@@ -1,0 +1,48 @@
+body {
+font-family :arial;
+padding : 0px;
+margin : 0px;
+}
+
+table {
+font-size: 8pt;
+border-top : black 1px solid;
+border-right : black 1px solid;
+/* border-spacing : 10px */
+border-collapse : collapse;
+}
+
+td, th {
+text-align : left;
+vertical-align : top;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+border-left : black 1px solid;
+border-bottom: black 1px solid;
+padding-left : 4px;
+padding-right : 4px;
+}
+
+th {
+background-color : #aaaaaa;
+}
+
+td.number {
+color : blue
+}
+
+td.boolean {
+color : green;
+font-style : italic;
+}
+
+td.date {
+color : purple;
+}
+
+td.null:after {
+color : gray;
+font-style : italic;
+content : null;
+}

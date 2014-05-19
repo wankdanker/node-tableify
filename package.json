@@ -10,5 +10,8 @@
     "tableify": "./bin/tableify.js"
   },
   "author": "Dan VerWeire",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "optimist": "^0.6.1"
+  }
 }
