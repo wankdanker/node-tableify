@@ -55,6 +55,19 @@ var html = tableify({
 console.log(html);
 ```
 
+command line usage
+------------------
+
+When installed with `npm install -g tableify` you get the tablify command line utility. 
+This is a simple command which accepts JSON from stdin and outputs html to stdout. I use
+it for emailing json files in a nice format for debugging purposes.
+
+The --style option prepends a <style> tag with some default css
+
+```bash
+cat datafile.json | tableify --style | mutt -e 'set content_type="text/html"' me@myaddress.com
+```
+
 license
 -------
 
