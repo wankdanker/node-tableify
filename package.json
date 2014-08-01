@@ -13,5 +13,19 @@
   "license": "MIT",
   "dependencies": {
     "optimist": "^0.6.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wankdanker/node-tableify.git"
+  },
+  "keywords": [
+    "object",
+    "html",
+    "table"
+  ],
+  "bugs": {
+    "url": "https://github.com/wankdanker/node-tableify/issues"
+  },
+  "homepage": "https://github.com/wankdanker/node-tableify"
 }
