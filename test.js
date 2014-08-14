@@ -37,6 +37,11 @@ var obj = {
 	]
 };
 
+//create a circular reference
+obj.fish[0].b = obj.fish;
+
 //console.log(tableify(obj));
+//console.log(html);
+
 assert.equal(tableify(obj) + '\n', html);
 
