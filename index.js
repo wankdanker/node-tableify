@@ -43,7 +43,7 @@ function tableify(obj, processingArray, parents) {
         }
         
     }
-    else if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
+    else if (obj && typeof obj === 'object' && !Array.isArray(obj) && !(obj instanceof Date)) {
         if (!processingArray) {
             buf.push('<table>');
 
