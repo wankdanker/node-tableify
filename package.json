@@ -7,7 +7,7 @@
     "test": "node test.js"
   },
   "bin": {
-    "tableify": "./bin/tableify.js"
+    "tableify": "./bin/tableify"
   },
   "author": "Dan VerWeire",
   "license": "MIT",
