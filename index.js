@@ -1,8 +1,12 @@
+"use strict";
+
 module.exports = tableify;
 
-function tableify(obj, processingArray, parents) {
+function tableify(obj, columns, parents) {
     var buf = [];
     var type = typeof obj;
+    var cols;
+
     parents = parents || [];
 
     if (type !== 'object' || obj == null || obj == undefined) {
@@ -18,7 +22,19 @@ function tableify(obj, processingArray, parents) {
         if (typeof obj[0] === 'object') {
             buf.push('<table>','<thead>','<tr>');
 
-            Object.keys(obj[0] || {}).forEach(function (key) {
+            //loop through every object and get unique keys
+            var keys = {};
+            obj.forEach(function (o) {
+                if (typeof o === 'object' && !Array.isArray(o)) {
+                    Object.keys(o).forEach(function (k) {
+                        keys[k] = true;
+                    });
+                }
+            });
+
+            cols = Object.keys(keys);
+
+            cols.forEach(function (key) {
                 buf.push('<th' + getClass(obj[0][key]) + '>', key, '</th>');
             });
 
@@ -26,7 +42,7 @@ function tableify(obj, processingArray, parents) {
 
             obj.forEach(function (record) {
                 buf.push('<tr>');
-                buf.push(tableify(record, true, parents));
+                buf.push(tableify(record, cols, parents));
                 buf.push('</tr>');
             });
 
@@ -34,17 +50,19 @@ function tableify(obj, processingArray, parents) {
         }
         else {
             buf.push('<table>','<tbody>');
-
-            obj.forEach(function (val) {
-                buf.push('<tr>', '<td' + getClass(val) + '>', tableify(val, true, parents), '</td>', '</tr>');
+            cols = [];
+            
+            obj.forEach(function (val, ix) {
+                cols.push(ix);
+                buf.push('<tr>', '<td' + getClass(val) + '>', tableify(val, cols, parents), '</td>', '</tr>');
             });
-
+            
             buf.push('</tbody>','</table>');
         }
         
     }
     else if (obj && typeof obj === 'object' && !Array.isArray(obj) && !(obj instanceof Date)) {
-        if (!processingArray) {
+        if (!columns) {
             buf.push('<table>');
 
             Object.keys(obj).forEach(function (key) {
@@ -54,12 +72,12 @@ function tableify(obj, processingArray, parents) {
             buf.push('</table>');
         }
         else {
-            Object.keys(obj).forEach(function (key) {
+            columns.forEach(function (key) {
                 if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
                     buf.push('<td' + getClass(obj[key]) + '>', tableify(obj[key], false, parents), '</td>');
                 }
                 else {
-                    buf.push('<td' + getClass(obj[key]) + '>', tableify(obj[key], processingArray, parents), '</td>');
+                    buf.push('<td' + getClass(obj[key]) + '>', tableify(obj[key], columns, parents), '</td>');
                 }
             });
         }
