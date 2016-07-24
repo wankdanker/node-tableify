@@ -1,0 +1,19 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@3.10.3
+3 info using node@v6.3.0
+4 verbose publish [ '.' ]
+5 verbose stack Error: No version provided
+5 verbose stack     at /usr/local/lib/node_modules/npm/lib/publish.js:52:36
+5 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:356:5
+5 verbose stack     at handleExists (/usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:329:20)
+5 verbose stack     at FSReqWrap.cb [as oncomplete] (fs.js:257:19)
+6 verbose cwd /home/troy/workspace/node-tableify
+7 error Linux 4.4.0-31-generic
+8 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "publish"
+9 error node v6.3.0
+10 error npm  v3.10.3
+11 error No version provided
+12 error If you need help, you may report this error at:
+12 error     <https://github.com/npm/npm/issues>
+13 verbose exit [ 1, true ]

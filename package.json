@@ -1,6 +1,6 @@
 {
   "name": "tableify",
-  "troy-lamerton": "https://github.com/troy-lamerton/node-tableify",
+  "version": "1.0.1",
   "description": "Create HTML tables from Javascript Objects",
   "main": "index.js",
   "scripts": {
