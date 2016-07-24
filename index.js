@@ -27,11 +27,11 @@ function tableify(obj, columns, parents) {
             obj.forEach(function (row, ix) {
                 cols.push(ix);
 
-                buf.push('<tr>', );
-                
+                buf.push('<tr>');
+
                 row.forEach(function (val) {
                     buf.push('<td' + getClass(val) + '>', tableify(val, cols, parents), '</td>')
-                }
+                })
                 
                 buf.push('</tr>');
             });
