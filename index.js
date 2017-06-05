@@ -51,15 +51,15 @@ function tableify(obj, columns, parents) {
         else {
             buf.push('<table>','<tbody>');
             cols = [];
-            
+
             obj.forEach(function (val, ix) {
                 cols.push(ix);
                 buf.push('<tr>', '<td' + getClass(val) + '>', tableify(val, cols, parents), '</td>', '</tr>');
             });
-            
+
             buf.push('</tbody>','</table>');
         }
-        
+
     }
     else if (obj && typeof obj === 'object' && !Array.isArray(obj) && !(obj instanceof Date)) {
         if (!columns) {
@@ -96,10 +96,10 @@ function tableify(obj, columns, parents) {
 }
 
 function getClass(obj) {
-    return ' class="' 
-        + ((obj && obj.constructor)
-            ? obj.constructor.name 
-            : typeof obj
+    return ' class="'
+        + ((obj && obj.constructor && obj.constructor.name)
+            ? obj.constructor.name
+            : typeof obj || ''
         ).toLowerCase()
         + ((obj === null)
             ? ' null'
