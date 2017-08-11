@@ -35,6 +35,11 @@ var obj = {
 		, 'asdf'
 		, 'asdf'
 	]
+	, twodee : [
+		[ 1234, 1234 ]
+		, [ 2345, 2345 ]
+		, [ 3456, 3456 ]
+	]
 };
 
 //create a circular reference
