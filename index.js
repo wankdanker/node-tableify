@@ -19,7 +19,7 @@ function tableify(obj, columns, parents) {
     }
 
     if (Array.isArray(obj)) {
-        if (obj.every(Array.isArray)) {
+        if (Array.isArray(obj[0]) && obj.every(Array.isArray)) {
             buf.push('<table>','<tbody>');
             cols = [];
             
@@ -27,11 +27,11 @@ function tableify(obj, columns, parents) {
             obj.forEach(function (row, ix) {
                 cols.push(ix);
 
-                buf.push('<tr>', );
+                buf.push('<tr>');
                 
                 row.forEach(function (val) {
                     buf.push('<td' + getClass(val) + '>', tableify(val, cols, parents), '</td>')
-                }
+                });
                 
                 buf.push('</tr>');
             });
