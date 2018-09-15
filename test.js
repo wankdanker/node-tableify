@@ -50,3 +50,10 @@ obj.fish[0].b = obj.fish;
 
 assert.equal(tableify(obj) + '\n', html);
 
+t = tableify.defaults({ classes : false })
+
+console.log(t(obj))
+
+t = tableify.defaults({ classPrefix : 'tblfy-' })
+
+console.log(t(obj))

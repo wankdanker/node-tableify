@@ -1,129 +1,144 @@
 "use strict";
 
-module.exports = tableify;
+module.exports = init({
 
-function tableify(obj, columns, parents) {
-    var buf = [];
-    var type = typeof obj;
-    var cols;
+});
 
-    parents = parents || [];
+module.exports.defaults = init;
 
-    if (type !== 'object' || obj == null || obj == undefined) {
-    }
-    else if (~parents.indexOf(obj)) {
-        return "[Circular]";
-    }
-    else {
-        parents.push(obj);
-    }
+function init(config) {
+    var classes = config.classes === false ? false : true;
+    var classPrefix = config.classPrefix || "";
 
-    if (Array.isArray(obj)) {
-        if (Array.isArray(obj[0]) && obj.every(Array.isArray)) {
-            buf.push('<table>','<tbody>');
-            cols = [];
-            
-            // 2D array is an array of rows
-            obj.forEach(function (row, ix) {
-                cols.push(ix);
+    return function tableify(obj, columns, parents) {
+        var buf = [];
+        var type = typeof obj;
+        var cols;
 
-                buf.push('<tr>');
+        parents = parents || [];
+
+        if (type !== 'object' || obj == null || obj == undefined) {
+        }
+        else if (~parents.indexOf(obj)) {
+            return "[Circular]";
+        }
+        else {
+            parents.push(obj);
+        }
+
+        if (Array.isArray(obj)) {
+            if (Array.isArray(obj[0]) && obj.every(Array.isArray)) {
+                buf.push('<table>','<tbody>');
+                cols = [];
                 
-                row.forEach(function (val) {
-                    buf.push('<td' + getClass(val) + '>', tableify(val, cols, parents), '</td>')
+                // 2D array is an array of rows
+                obj.forEach(function (row, ix) {
+                    cols.push(ix);
+
+                    buf.push('<tr>');
+                    
+                    row.forEach(function (val) {
+                        buf.push('<td' + getClass(val) + '>', tableify(val, cols, parents), '</td>')
+                    });
+                    
+                    buf.push('</tr>');
                 });
                 
-                buf.push('</tr>');
-            });
-            
-            buf.push('</tbody>','</table>');
+                buf.push('</tbody>','</table>');
+            }
+            else if (typeof obj[0] === 'object') {
+                buf.push('<table>','<thead>','<tr>');
+
+                //loop through every object and get unique keys
+                var keys = {};
+                obj.forEach(function (o) {
+                    if (typeof o === 'object' && !Array.isArray(o)) {
+                        Object.keys(o).forEach(function (k) {
+                            keys[k] = true;
+                        });
+                    }
+                });
+
+                cols = Object.keys(keys);
+
+                cols.forEach(function (key) {
+                    buf.push('<th' + getClass(obj[0][key]) + '>', key, '</th>');
+                });
+
+                buf.push('</tr>', '</thead>', '<tbody>');
+
+                obj.forEach(function (record) {
+                    buf.push('<tr>');
+                    buf.push(tableify(record, cols, parents));
+                    buf.push('</tr>');
+                });
+
+                buf.push('</tbody></table>');
+            }
+            else {
+                buf.push('<table>','<tbody>');
+                cols = [];
+
+                obj.forEach(function (val, ix) {
+                    cols.push(ix);
+                    buf.push('<tr>', '<td' + getClass(val) + '>', tableify(val, cols, parents), '</td>', '</tr>');
+                });
+
+                buf.push('</tbody>','</table>');
+            }
+
         }
-        else if (typeof obj[0] === 'object') {
-            buf.push('<table>','<thead>','<tr>');
+        else if (obj && typeof obj === 'object' && !Array.isArray(obj) && !(obj instanceof Date)) {
+            if (!columns) {
+                buf.push('<table>');
 
-            //loop through every object and get unique keys
-            var keys = {};
-            obj.forEach(function (o) {
-                if (typeof o === 'object' && !Array.isArray(o)) {
-                    Object.keys(o).forEach(function (k) {
-                        keys[k] = true;
-                    });
-                }
-            });
+                Object.keys(obj).forEach(function (key) {
+                    buf.push('<tr>', '<th' + getClass(obj[key]) + '>', key, '</th>', '<td' + getClass(obj[key]) + '>', tableify(obj[key], false, parents), '</td>', '</tr>');
+                });
 
-            cols = Object.keys(keys);
-
-            cols.forEach(function (key) {
-                buf.push('<th' + getClass(obj[0][key]) + '>', key, '</th>');
-            });
-
-            buf.push('</tr>', '</thead>', '<tbody>');
-
-            obj.forEach(function (record) {
-                buf.push('<tr>');
-                buf.push(tableify(record, cols, parents));
-                buf.push('</tr>');
-            });
-
-            buf.push('</tbody></table>');
+                buf.push('</table>');
+            }
+            else {
+                columns.forEach(function (key) {
+                    if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
+                        buf.push('<td' + getClass(obj[key]) + '>', tableify(obj[key], false, parents), '</td>');
+                    }
+                    else {
+                        buf.push('<td' + getClass(obj[key]) + '>', tableify(obj[key], columns, parents), '</td>');
+                    }
+                });
+            }
         }
         else {
-            buf.push('<table>','<tbody>');
-            cols = [];
-
-            obj.forEach(function (val, ix) {
-                cols.push(ix);
-                buf.push('<tr>', '<td' + getClass(val) + '>', tableify(val, cols, parents), '</td>', '</tr>');
-            });
-
-            buf.push('</tbody>','</table>');
+            buf.push(obj);
         }
 
-    }
-    else if (obj && typeof obj === 'object' && !Array.isArray(obj) && !(obj instanceof Date)) {
-        if (!columns) {
-            buf.push('<table>');
-
-            Object.keys(obj).forEach(function (key) {
-                buf.push('<tr>', '<th' + getClass(obj[key]) + '>', key, '</th>', '<td' + getClass(obj[key]) + '>', tableify(obj[key], false, parents), '</td>', '</tr>');
-            });
-
-            buf.push('</table>');
+        if (type !== 'object' || obj == null || obj == undefined) {
         }
         else {
-            columns.forEach(function (key) {
-                if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
-                    buf.push('<td' + getClass(obj[key]) + '>', tableify(obj[key], false, parents), '</td>');
-                }
-                else {
-                    buf.push('<td' + getClass(obj[key]) + '>', tableify(obj[key], columns, parents), '</td>');
-                }
-            });
+            parents.pop(obj);
         }
-    }
-    else {
-        buf.push(obj);
+
+        return buf.join('');
     }
 
-    if (type !== 'object' || obj == null || obj == undefined) {
-    }
-    else {
-        parents.pop(obj);
+    function getClass(obj) {
+        if (!classes) {
+            return '';
+        }
+
+        return ' class="'
+            + classPrefix
+            + ((obj && obj.constructor && obj.constructor.name)
+                ? obj.constructor.name
+                : typeof obj || ''
+            ).toLowerCase()
+            + ((obj === null)
+                ? ' null'
+                : ''
+            )
+            + '"'
+            ;
     }
 
-    return buf.join('');
-}
-
-function getClass(obj) {
-    return ' class="'
-        + ((obj && obj.constructor && obj.constructor.name)
-            ? obj.constructor.name
-            : typeof obj || ''
-        ).toLowerCase()
-        + ((obj === null)
-            ? ' null'
-            : ''
-        )
-        + '"'
-        ;
 }
