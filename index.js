@@ -150,6 +150,8 @@ function init(config) {
     // default reduce: array to array length message, object to object count of properties message, object having `value` property to this value
     function defaultReduce(obj) {
         if (Array.isArray(obj)) {
+            if (obj.length === 1)
+                return defaultReduce(obj[0]);
             return `(${obj.length} elements)`;
         } else if (typeof obj === "object") {
             if (obj.hasOwnProperty("value"))
