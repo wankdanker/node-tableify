@@ -153,8 +153,11 @@ function init(config) {
             return `(${obj.length} elements)`;
         } else if (typeof obj === "object") {
             if (obj.hasOwnProperty("value"))
-                return obj.value;
-            return `(${Object.keys(obj).length} properties)`;
+                return defaultReduce(obj.value);
+            let keys = Object.keys(obj);
+            if (keys.length === 1)
+                return defaultReduce(obj[keys[0]]);
+            return `(${keys.length} properties)`;
         }
 
         return obj;
