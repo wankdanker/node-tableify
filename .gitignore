@@ -1,2 +1,3 @@
 # don't check in installed node_modules
 node_modules/
+.idea
