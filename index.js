@@ -10,6 +10,10 @@ function init(config) {
     var classes = config.classes === false ? false : true;
     var classPrefix = config.classPrefix || "";
 
+    /**
+     * @param {object} options `reduceAt: number` reduces table at some depth
+     *                         `reducer: function(obj)` function used to reduce object
+     */
     return function tableify(obj, options = {}, columns, parents) {
         let {reduceAt = null, reducer = defaultReduce} = options;
 
