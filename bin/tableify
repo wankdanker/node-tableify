@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var tableify = require('../');
-var argv = require('optimist').argv;
+var argv = require('yargs').argv;
 var fs = require('fs');
 
 process.stdin.setEncoding('utf8');
