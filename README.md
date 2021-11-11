@@ -55,6 +55,29 @@ var html = tableify({
 console.log(html);
 ```
 
+reducing json depth
+-----
+
+You can additionally reduce JSON depth on some level by using additional tableify options:
+
+```javascript
+var html = tableify(json, {reduceAt: 3, reducer: () => {
+   // write some reducer function
+}});
+```
+
+In the example above all elements on 3rd level of depth will be reduced to the content returned from `reducer` function.
+
+You can also use default `reducer` function:
+
+```javascript
+var html = tableify(json, {reduceAt: 3});
+```
+
+This function returns:
+1. For arrays - message with array length.
+1. For object - if object has `value` property or has only one property, returns this value, otherwise returns message with amount of object properties.
+
 command line usage
 ------------------
 
